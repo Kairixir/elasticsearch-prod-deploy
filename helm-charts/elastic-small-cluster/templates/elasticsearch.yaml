@@ -1,0 +1,9 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: production-cluster
+spec:
+  version: {{ .Values.elasticsearch.version }}
+  nodeSets:
+  - name: master-data
+    count: {{ .Values. }}
