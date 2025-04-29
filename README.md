@@ -32,6 +32,10 @@ For production environment I would definitely either use encryption of Secrets
 in `etcd`, or look into either 3rd party solution such as Hashicorp Vault or the
 respective cloud providers secret management solution.
 
+#### Critical questions
+
+- How to manage secrets renewal and rotation?
+
 ### HA
 
 For HA [ES docs][2] recommend at least:
@@ -83,6 +87,9 @@ storage. Ideally using 3-2-1 backup strategy.
 
 ### Certificate management
 
-I am going to use in-built self-signed certificate manager from ECK operator. For larger environment with stable domain name, or with custom CA authority I would look into official docs and build upon the solution already present in the company based on the [ES docs][6]
+I am going to use in-built self-signed certificate manager from ECK operator.
+For larger environment with stable domain name, or with custom CA authority I
+would look into official docs and build upon the solution already present in
+the company based on the [ES docs][6]
 
 [6]: https://www.elastic.co/docs/deploy-manage/security/k8s-https-settings
