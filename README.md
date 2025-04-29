@@ -57,8 +57,32 @@ Here are docs to ES's recommendations for:
 [3]: https://www.elastic.co/docs/deploy-manage/production-guidance/availability-and-resilience/resilience-in-small-clusters
 [4]: https://www.elastic.co/docs/deploy-manage/production-guidance/availability-and-resilience/resilience-in-larger-clusters
 
+Based on the [docs][3] and my production expectations I am going to use three
+nodes and [as the documentation recommends][5] set each of these as both: a
+data node and a master-eligible node. I am also going to create a single copy
+of each shard, so there are always two copies distributed through the three nodes.
+This makes the cluster resilient to the failure of any single node, which
+ought to create enough resiliency for my production environment.
+
+[5]: https://www.elastic.co/docs/deploy-manage/production-guidance/availability-and-resilience/resilience-in-small-clusters#high-availability-cluster-design-three-nodes
+
+This is the part I would always redesign from start based on my requirements
+for processing speed and resource restrictions.
+
+### Node placement in k8s cluster
+
+Each ES node will be placed on a different node in the k8s cluster and they
+should never run together on a single worker node. I will ensure this using
+anti-affinity for pods and taints with tolerations for nodes.
+
 ### Backups
 
 ES uses `Snapshot` feature for backups. Given more time and
 resources I would set it up to create these backups and store them in off-site
 storage. Ideally using 3-2-1 backup strategy.
+
+### Certificate management
+
+I am going to use in-built self-signed certificate manager from ECK operator. For larger environment with stable domain name, or with custom CA authority I would look into official docs and build upon the solution already present in the company based on the [ES docs][6]
+
+[6]: https://www.elastic.co/docs/deploy-manage/security/k8s-https-settings
