@@ -6,4 +6,31 @@ spec:
   version: {{ .Values.elasticsearch.version }}
   nodeSets:
   - name: master-data
-    count: {{ .Values. }}
+    count: {{ .Values.elasticsearch.replicas }}
+    config:
+      node.roles: ["master", "data", "ingest"]
+      cluster.initial_master_nodes: ["production-cluster-master-data-0","production-cluster-master-data-1","production-cluster-master-data-2"]
+    podTemplate:
+      spec:
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: elasticsearch.k8s.elastic.co/cluster-name
+                  operator: In
+                  values: ["production-cluster"]
+              topologyKey: "kubernetes.io/hostname"
+        nodeSelector: {{ .Values.elasticsearch.nodeSelector | toJson }}
+        tolerations: {{ .Values.elasticsearch.tolerations | toJson }}
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: {{ .Values.elasticsearch.storageClass }}
+        resources:
+          requests:
+            storage: {{ .Values.elasticsearch.storageSize }}
+  secureSettings: {{ .Values.elasticsearch.secureSettings }}
+
