@@ -93,3 +93,13 @@ would look into official docs and build upon the solution already present in
 the company based on the [ES docs][6]
 
 [6]: https://www.elastic.co/docs/deploy-manage/security/k8s-https-settings
+
+## Sources
+
+- Kagi search engine
+- Perplexity.ai space [whalebones-task](https://www.perplexity.ai/search/create-multiple-approaches-for-QYzzeh80QXeMe6RQYdzIlw)
+- [minikube official docs](https://minikube.sigs.k8s.io/docs/)
+- [k8s official docs](https://kubernetes.io/docs/home/)
+- [helm official docs](https://helm.sh/docs/)
+- [elastic official docs](https://www.elastic.co/docs)
+- my previous projects for helm chart inspiration
